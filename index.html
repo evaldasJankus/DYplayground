@@ -32,8 +32,8 @@
 
                 function checkVariable() {
                     if (window[varName[0]][varName[1]] !== undefined && window[varName[0]][varName[1]] !== null) {
-                        document.cookie = `${cookieName}=${window[varName[1]]}; path=/; Max-Age=1800;`;
-                        resolve(`Cookie '${cookieName}' set with value: ${window[varName]}`);
+                        document.cookie = `${cookieName}=${window[varName[0]][varName[1]]}; path=/; Max-Age=1800;`;
+                        resolve(`Cookie '${cookieName}' set with value: ${window[varName[0]][varName[1]]}`);
                     } else if (Date.now() - startTime >= timeout) {
                         reject(new Error(`Timeout: Variable '${varName}' was not defined in time.`));
                     } else {
