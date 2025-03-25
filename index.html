@@ -32,7 +32,7 @@
 
                 function checkVariable() {
                     if (window[varName[0]][varName[1]] !== undefined && window[varName[0]][varName[1]] !== null) {
-                        if(varName[1] === '_dyid'){
+                        if(cookieName === '_dyid'){
                             document.cookie = `${cookieName}=${window[varName[0]][varName[1]]}; path=/; Max-Age=${maxAg};`;
                             resolve(`Cookie '${cookieName}' set with value: ${window[varName[0]][varName[1]]}`);
 
