@@ -31,8 +31,8 @@
                 const startTime = Date.now();
 
                 function checkVariable() {
-                    if (varName !== undefined && varName !== null) {
-                        document.cookie = `${cookieName}=${window[varName]}; path=/; Max-Age=1800;`;
+                    if (window[varName[0]][varName[1]] !== undefined && window[varName[0]][varName[1]] !== null) {
+                        document.cookie = `${cookieName}=${window[varName[1]]}; path=/; Max-Age=1800;`;
                         resolve(`Cookie '${cookieName}' set with value: ${window[varName]}`);
                     } else if (Date.now() - startTime >= timeout) {
                         reject(new Error(`Timeout: Variable '${varName}' was not defined in time.`));
@@ -46,7 +46,7 @@
         }
 
         // Example usage:
-        waitForVariableAndSetCookie(window.DY.jsession, '_dyjsession')
+        waitForVariableAndSetCookie(['DY','jsession'], '_dyjsession')
             .then(console.log)
             .catch(console.error);
     </script>
