@@ -26,20 +26,23 @@
         DY.recommendationContext = { type: 'HOMEPAGE' }; // in this example - a homepage page
 
         // Wait for _dyjsession
-        function waitForVariableAndSetCookie(varName, cookieName, checkInterval = 10, timeout = 1000, maxAg=1800) {
+        // function waitForVariableAndSetCookie(varName, cookieName, checkInterval = 10, timeout = 1000, maxAg=1800) {
+        function waitForVariableAndSetCookie(checkInterval = 10, timeout = 1000, maxAg=1800) {
             // return new Promise((resolve, reject) => {
                 const startTime = Date.now();
 
                 function checkVariable() {
-                    if (window[varName[0]][varName[1]] !== undefined && window[varName[0]][varName[1]] !== null) {
-                        document.cookie = `${cookieName}=${window[varName[0]][varName[1]]}; path=/; Max-Age=${maxAg};`;
+                    if (window.DY.dyid !== undefined && window.DY.dyid !== null) {
+                        document.cookie = `_dyid=${window.DY.dyid}; path=/; Max-Age=2592000;`;
+                        document.cookie = `_dyid_server=${window.DY.dyid}; path=/; Max-Age=31536000;`;
+                        document.cookie = `_dyjsession=${window.DY.jsession}; path=/; Max-Age=1800;`;
                         // resolve(`Cookie '${cookieName}' set with value: ${window[varName[0]][varName[1]]}`);
-                        console.log(`Cookie '_dyid_server' set with value: ${window[varName[0]][varName[1]]}`);
-                        if(cookieName === '_dyid'){
-                            document.cookie = `_dyid_server=${window[varName[0]][varName[1]]}; path=/; Max-Age=31536000;`;
-                            // resolve(`Cookie '_dyid_server' set with value: ${window[varName[0]][varName[1]]}`);
-                            console.log(`Cookie '_dyid_server' set with value: ${window[varName[0]][varName[1]]}`);
-                        }
+                        // console.log(`Cookie '_dyid_server' set with value: ${window[varName[0]][varName[1]]}`);
+                        // if(cookieName === '_dyid'){
+                        //     document.cookie = `_dyid_server=${window[varName[0]][varName[1]]}; path=/; Max-Age=31536000;`;
+                        //     // resolve(`Cookie '_dyid_server' set with value: ${window[varName[0]][varName[1]]}`);
+                        //     console.log(`Cookie '_dyid_server' set with value: ${window[varName[0]][varName[1]]}`);
+                        // }
                     } else if (Date.now() - startTime >= timeout) {
                         // reject(new Error(`Timeout: Variable '${varName}' was not defined in time.`));
                         console.log(`Timeout: Variable '${varName}' was not defined in time.`);
@@ -53,11 +56,11 @@
         }
 
         // Example usage:
-        waitForVariableAndSetCookie(['DY','jsession'], '_dyjsession');
+        waitForVariableAndSetCookie();
             // .then(console.log)
             // .catch(console.error);
 
-        waitForVariableAndSetCookie(['DY','dyid'], '_dyid', maxAg=2592000);
+        // waitForVariableAndSetCookie(['DY','dyid'], '_dyid', maxAg=2592000);
             // .then(console.log)
             // .catch(console.error);
     </script>
