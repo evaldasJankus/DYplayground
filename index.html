@@ -24,7 +24,32 @@
     <script type="text/javascript">
         window.DY = window.DY || {};
         DY.recommendationContext = { type: 'HOMEPAGE' }; // in this example - a homepage page
-      </script>
+
+        // Wait for _dyjsession
+        function waitForVariableAndSetCookie(varName, cookieName, checkInterval = 10, timeout = 1000) {
+            return new Promise((resolve, reject) => {
+                const startTime = Date.now();
+
+                function checkVariable() {
+                    if (varName !== undefined && varName !== null) {
+                        document.cookie = `${cookieName}=${window[varName]}; path=/; Max-Age=1800;`;
+                        resolve(`Cookie '${cookieName}' set with value: ${window[varName]}`);
+                    } else if (Date.now() - startTime >= timeout) {
+                        reject(new Error(`Timeout: Variable '${varName}' was not defined in time.`));
+                    } else {
+                        setTimeout(checkVariable, checkInterval);
+                    }
+                }
+
+                checkVariable();
+            });
+        }
+
+        // Example usage:
+        waitForVariableAndSetCookie(window.DY.jsession, '_dyjsession')
+            .then(console.log)
+            .catch(console.error);
+    </script>
     <!-- ADDING SCRIPTS -->
     <script type="text/javascript" src="//cdn-eu.dynamicyield.com/api/9880853/api_dynamic.js"></script>
     <script type="text/javascript" src="//cdn-eu.dynamicyield.com/api/9880853/api_static.js"></script>
