@@ -25,7 +25,7 @@
         window.DY = window.DY || {};
         DY.recommendationContext = { type: 'HOMEPAGE' }; // in this example - a homepage page
 
-        DY.userConsentActive = {accepted: false};
+        // DY.userConsentActive = {accepted: false};
         // Wait for _dyjsession
         // function waitForVariableAndSetCookie(varName, cookieName, checkInterval = 10, timeout = 1000, maxAg=1800) {
         function waitForVariableAndSetCookie(checkInterval = 10, timeout = 1000, maxAg=1800) {
@@ -57,7 +57,8 @@
         }
 
         // Example usage:
-        if((DY.userConsentActive && DYO.sectionFeatures.ACTIVE_CONSENT.enabled) || !DYO.sectionFeatures.ACTIVE_CONSENT.enabled) waitForVariableAndSetCookie();
+        waitForVariableAndSetCookie();
+        // if((DY.userConsentActive && DYO.sectionFeatures.ACTIVE_CONSENT.enabled) || !DYO.sectionFeatures.ACTIVE_CONSENT.enabled) waitForVariableAndSetCookie();
         // else if(!DYO.sectionFeatures.ACTIVE_CONSENT.enabled)
             // .then(console.log)
             // .catch(console.error);
